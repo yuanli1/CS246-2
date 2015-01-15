@@ -93,6 +93,56 @@ public class Apriori {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		//Pass III:
+				// Create the frequent Tuples of size 3:
+				HashMap<String,Integer> frequentTuplesOfSizeThree = new HashMap<String,Integer>();
+				ArrayList<String> prunedTuplesOfSizeThree = new ArrayList<String>();
+				try {
+					for (String line : Files.readAllLines(Paths.get(args[0]))) {
+						ArrayList<String> lineItems = new ArrayList<String>();
+						// Create a list of items:
+						for (String token : line.split("\\s+")) {
+							if (!lineItems.contains(token)) {
+								lineItems.add(token);
+							}
+						}
+
+						for (int i = 0; i < lineItems.size(); i++) {
+							for (int j = i+1; j < lineItems.size(); j++) 
+								for (int k = j+1; k < lineItems.size(); k++) {
+									String pairSortedKey = GetSortedKey(lineItems.get(i) + ","
+								+ lineItems.get(j));
+										
+								if ((prunedTuplesOfSizeTwo.contains(pairSortedKey))
+										&& (PrunedItems.contains(lineItems.get(k))))  {
+									// Create the key:
+									String sortedKey = GetSortedKey(pairSortedKey
+											+ "," + lineItems.get(k));
+									int newCount = 1;
+									if (frequentTuplesOfSizeThree.containsKey(sortedKey)) {
+										newCount += frequentTuplesOfSizeThree
+												.get(sortedKey);
+									}
+
+									frequentTuplesOfSizeThree.put(sortedKey, newCount);
+								}
+							}
+						}
+						
+						for(Map.Entry<String, Integer> entry : frequentTuplesOfSizeThree.entrySet())
+						{
+							if(entry.getValue() >= supportThreshold)
+							{
+								prunedTuplesOfSizeThree.add(entry.getKey());
+							}
+						}
+					}
+					
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 		System.out.println(GetSortedKey("Hello,world,helllo"));
 	}
 	
