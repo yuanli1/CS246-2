@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.TreeSet;
 
 public class Apriori {
@@ -14,7 +15,7 @@ public class Apriori {
 		// Pass I:
 		// Create the ItemsCount:
 		HashMap<String, Integer> ItemsCount = new HashMap<String, Integer>();
-
+		ArrayList<String> PrunedItems = new ArrayList<String>();
 		try {
 			for (String line : Files.readAllLines(Paths.get(args[0]))) {
 				ArrayList<String> lineItems = new ArrayList<String>();
@@ -34,6 +35,14 @@ public class Apriori {
 					ItemsCount.put(item, newCount);
 				}
 			}
+			for(Map.Entry<String, Integer> entry : ItemsCount.entrySet())
+			{
+				if(entry.getValue() >= supportThreshold)
+				{
+					PrunedItems.add(entry.getKey());
+				}
+			}
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -42,6 +51,7 @@ public class Apriori {
 		//Pass II:
 		// Create the frequent Tuples of size 2:
 		HashMap<String,Integer> frequestTuplesOfSizeTwo = new HashMap<String,Integer>();
+		ArrayList<String> prunedTuplesOfSizeTwo = new ArrayList<String>();
 		try {
 			for (String line : Files.readAllLines(Paths.get(args[0]))) {
 				ArrayList<String> lineItems = new ArrayList<String>();
@@ -54,8 +64,8 @@ public class Apriori {
 
 				for (int i = 0; i < lineItems.size(); i++) {
 					for (int j = i+1; j < lineItems.size(); j++) {
-						if ((ItemsCount.get(lineItems.get(i)) >= supportThreshold)
-								&& (ItemsCount.get(lineItems.get(j)) >= supportThreshold)) {
+						if ((PrunedItems.contains(lineItems.get(i)))
+								&& (PrunedItems.contains(lineItems.get(j))))  {
 							// Create the key:
 							String sortedKey = GetSortedKey(lineItems.get(i)
 									+ "," + lineItems.get(j));
@@ -67,6 +77,14 @@ public class Apriori {
 
 							frequestTuplesOfSizeTwo.put(sortedKey, newCount);
 						}
+					}
+				}
+				
+				for(Map.Entry<String, Integer> entry : frequestTuplesOfSizeTwo.entrySet())
+				{
+					if(entry.getValue() >= supportThreshold)
+					{
+						prunedTuplesOfSizeTwo.add(entry.getKey());
 					}
 				}
 			}
