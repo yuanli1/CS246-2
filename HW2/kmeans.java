@@ -1,6 +1,5 @@
 package cs246.stanford.edu;
 
-import java.io.File;
 import java.util.Arrays;
 
 import org.apache.hadoop.conf.Configuration;
@@ -21,7 +20,7 @@ public class kmeans extends Configured implements Tool {
 	public static void main(String[] args) throws Exception {
 		System.out.println(Arrays.toString(args));
 		Configuration conf = new Configuration();
-		conf.set("CentroidPath", "/home/cloudera/workspace/kmeans/c1.txt");
+		conf.set("CentroidPath", "/home/cloudera/git/CS246/HW2/c1.txt");
 		int res = ToolRunner.run(conf, new kmeans(), args);
 		System.exit(res);
 	}
