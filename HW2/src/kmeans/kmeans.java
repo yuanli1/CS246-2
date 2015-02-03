@@ -29,7 +29,7 @@ public class kmeans extends Configured implements Tool {
 	public int run(String[] args) throws Exception {
 
 		String baseOutputPath = "output";
-		String centroidsPath = "/home/cloudera/git/CS246/HW2/c1.txt";
+		String centroidsPath = "/home/cloudera/git/CS246/HW2/c2.txt";
 		System.out.println(Arrays.toString(args));
 		
 		for (int i = 0; i < 20; i++) {
