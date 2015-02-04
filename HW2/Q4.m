@@ -67,4 +67,11 @@
 %  end
 %  [sortedVal,sortedIndex]=sort(centroids(minIndex,:),'descend');
 %  vocab(sortedIndex(1:10))
+
+%%%%%%%%%%%%%%%%%%%% Q4c: Cost percentage change: %%%%%%%%%%%%%%%%%%%%%%%%
+disp('Percentage Change C1:');
+(costC1(1,10)-costC1(1,1)) / costC1(1,1) * 100
+
+disp('Percentage Change C2:');
+(costC2(1,10)-costC2(1,1)) / costC2(1,1) * 100
  
