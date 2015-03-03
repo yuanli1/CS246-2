@@ -4,6 +4,7 @@ from hash_func import *
 from DataStreamUtilities import *
 from CountStreamWords import *
 from pprint import pprint as pp
+import concurrent.futures
 
 def main():
 
@@ -17,19 +18,27 @@ def main():
     funcs_object = hash_func(paramsFilePath, 123457, num_slots_per_hash)
     streamCount = CountStreamWords(funcs_object.functions,num_hash_function, num_slots_per_hash)
     count = 0
-    chunk_size = 100
+    chunk_size = 10
+    executors = concurrent.futures.ThreadPoolExecutor(chunk_size)
+    processes = concurrent.futures.ProcessPoolExecutor(chunk_size)
     startTime = time.time()
     with open(wordsStreamFilePath, 'r') as file:
         while True:
             words = file.readlines(chunk_size)
-            for word in words:
-                count += 1
-                if (count % 50000) == 0:
-                    print('elapsed time:{0:.3f}, count:{1}'.format(time.time() - startTime, count))
-                    break
-                if not word:
-                    break
-                streamCount.add(int(word))
+            count += chunk_size
+            if (count % 100) == 0:
+                print('elapsed time:{0:.3f}, count:{1}'.format(time.time() - startTime, count))
+            futures = [processes.submit(streamCount.add(int(word))) for word in words]
+            
+            concurrent.futures.wait(futures)
+            #for word in words:
+            #    count += 1
+            #    if (count % 100) == 0:
+            #        print('elapsed time:{0:.3f}, count:{1}'.format(time.time() - startTime, count))
+            #        break
+            #    if not word:
+            #        break
+            #    streamCount.add(int(word))
 
     elapsedTime = time.time() - startTime
     print('elapsed time:{0:.3f}, count:{1}'.format(elapsedTime, count))
