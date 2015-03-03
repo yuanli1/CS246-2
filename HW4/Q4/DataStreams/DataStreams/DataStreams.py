@@ -17,16 +17,19 @@ def main():
     funcs_object = hash_func(paramsFilePath, 123457, num_slots_per_hash)
     streamCount = CountStreamWords(funcs_object.functions,num_hash_function, num_slots_per_hash)
     count = 0
+    chunk_size = 100
     startTime = time.time()
     with open(wordsStreamFilePath, 'r') as file:
         while True:
-            word = file.readline()
-            count += 1
-            if (count % 10000) == 0:
-                print('count:{0}\n'.format(count))
-            if not word:
-                break
-            streamCount.add(int(word))
+            words = file.readlines(chunk_size)
+            for word in words:
+                count += 1
+                if (count % 50000) == 0:
+                    print('elapsed time:{0:.3f}, count:{1}'.format(time.time() - startTime, count))
+                    break
+                if not word:
+                    break
+                streamCount.add(int(word))
 
     elapsedTime = time.time() - startTime
     print('elapsed time:{0:.3f}, count:{1}'.format(elapsedTime, count))
