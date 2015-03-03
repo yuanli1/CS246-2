@@ -22,6 +22,9 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="CountStreamWords.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="DataStreams.py" />
     <Compile Include="DataStreamUtilities.py" />
     <Compile Include="hash_func.py">
