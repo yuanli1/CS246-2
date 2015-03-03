@@ -13,5 +13,5 @@ class CountStreamWords(object):
     def add(self,index):
         for i in range(self.num_hash_functions):
             hash_val = self.functions[i](index)
-            self.hash_matrix[i][hash_val] += 1
+            #self.hash_matrix[i][hash_val] += 1
 
