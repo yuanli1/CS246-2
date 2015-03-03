@@ -1,7 +1,7 @@
 import pprint 
 import time
 
-inputFilePath = 'livejournal-undirected.txt'
+inputFilePath = 'livejournal-undirected-small.txt'
 #inputFilePath = 'sanitySmall.txt'
 
 chunk_size = 20000
