@@ -13,11 +13,13 @@ public class WordStreamCount {
 
 	private static BufferedReader br;
 	private static String paramsFilePath = "data\\hash_params.txt";
-	private static String wordsStreamFilePathTiny = "data\\words_stream_tiny.txt";
-	private static String countsFilePathTiny = "data\\counts_tiny.txt";
+	private static String wordsStreamFilePathTiny = "data//words_stream_tiny.txt";
+	private static String countsFilePathTiny = "data//counts_tiny.txt";
 	private static String wordsStreamFilePath = "C:\\Users\\siamaks\\OneDrive\\Stanford\\CS246\\ProblemSets\\HW4\\Q4\\HW4-q4\\words_stream.txt";
+	private static String wordsStreamFilePathMac = " //Users//Max//OneDrive//Stanford//CS246//ProblemSets//HW4//Q4//HW4-q4//words_stream.txt";
+	private static String countsFilePathMac = " //Users//Max//OneDrive//Stanford//CS246//ProblemSets//HW4//Q4//HW4-q4//counts.txt";
 	private static String countsFilePath = "C:\\Users\\siamaks\\OneDrive\\Stanford\\CS246\\ProblemSets\\HW4\\Q4\\HW4-q4\\counts.txt";
-	private static String errorsFilePath = "data\\errors.txt";
+	private static String errorsFilePath = "data//errors.txt";
 	private static double epsilon = Math.pow(10, -4) * Math.E;
 	private static double delta = Math.pow((Math.E), -5);
 	
@@ -27,7 +29,7 @@ public class WordStreamCount {
 		int num_slots_per_hash = (int) Math.ceil(Math.E / epsilon);
 		int[][] params = new int[][]{{3,1561},{17,277},{38,394},{61,13},{78,246}};
 		int[][] hash_matrix = new int[num_hash_function][num_slots_per_hash];
-		br = new BufferedReader(new FileReader(wordsStreamFilePathTiny));
+		br = new BufferedReader(new FileReader(wordsStreamFilePathMac));
 		 
 		String currentLine;
 		int numLines = 0;
@@ -41,15 +43,15 @@ public class WordStreamCount {
 				hash_matrix[i][hash_val] ++;
 			}
 			//System.out.println(sCurrentLine);
-			if (numLines % 10000 == 0)
+			if (numLines % 100000 == 0)
 				System.out.println(numLines);
 		}
 		
-		
+		System.out.println("Size of stream:" + numLines);
 		// Now create the error Array:
 		Map<String,Double> errors = new HashMap<String,Double>();
 		
-		br = new BufferedReader(new FileReader(countsFilePathTiny));
+		br = new BufferedReader(new FileReader(countsFilePathMac));
 
 		while ((currentLine = br.readLine()) != null) {
 			String[] tokens = currentLine.split("\\W+");
